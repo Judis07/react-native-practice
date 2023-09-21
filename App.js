@@ -52,7 +52,10 @@ const TabNavigator = () => {
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    "Poppins-Regular": require("./assets/fonts/Poppins-Regular.ttf"),
+    regular: require("./assets/fonts/Poppins-Regular.ttf"),
+    medium: require("./assets/fonts/Poppins-Medium.ttf"),
+    "semi bold": require("./assets/fonts/Poppins-SemiBold.ttf"),
+    bold: require("./assets/fonts/Poppins-Bold.ttf"),
   });
 
   const onLayoutRootView = useCallback(async () => {
