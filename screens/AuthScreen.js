@@ -1,9 +1,10 @@
-import { Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesome, Feather } from "@expo/vector-icons";
 
 import PageContainer from "../components/PageContainer";
 import Input from "../components/Input";
+import SubmitButton from "../components/SubmitButton";
 
 const AuthScreen = () => {
   return (
@@ -40,6 +41,14 @@ const AuthScreen = () => {
           iconSize={20}
           errorText={""}
         />
+
+        <View style={styles.buttonContainer}>
+          <SubmitButton
+            title="Sign up"
+            onPress={() => console.log("submitting...")}
+            // disabled={true}
+          />
+        </View>
       </PageContainer>
     </SafeAreaView>
   );
@@ -48,6 +57,9 @@ const AuthScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  buttonContainer: {
+    marginVertical: 20,
   },
 });
 
