@@ -1,14 +1,14 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import colors from "../contants/colors";
 
-const SubmitButton = ({ color, title, onPress, disabled }) => {
+const SubmitButton = ({ color, title, onPress, disabled, customStyles }) => {
   const enabledBgColor = color || colors.primary;
   const disabledBgColor = colors.lightGrey;
   const bgColor = disabled ? disabledBgColor : enabledBgColor;
   return (
     <TouchableOpacity
       onPress={disabled ? () => {} : onPress}
-      style={{ ...styles.button, backgroundColor: bgColor }}
+      style={{ ...styles.button, ...customStyles, backgroundColor: bgColor }}
     >
       <Text
         style={{

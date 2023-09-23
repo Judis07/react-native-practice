@@ -1,54 +1,27 @@
-import { Text, StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { FontAwesome, Feather } from "@expo/vector-icons";
 
 import PageContainer from "../components/PageContainer";
-import Input from "../components/Input";
-import SubmitButton from "../components/SubmitButton";
+import SignUpForm from "../components/SignUpForm";
+import SignInForm from "../components/SignInForm";
+import { useState } from "react";
+import colors from "../contants/colors";
 
 const AuthScreen = () => {
+  const [isSignUp, setSignUp] = useState(false);
   return (
     <SafeAreaView style={styles.container}>
       <PageContainer>
-        <Input
-          label="First Name"
-          iconPack={FontAwesome}
-          icon="user-o"
-          iconSize={20}
-          errorText={""}
-        />
+        {isSignUp ? <SignUpForm /> : <SignInForm />}
 
-        <Input
-          label="Last Name"
-          iconPack={FontAwesome}
-          icon="user-o"
-          iconSize={20}
-          errorText={""}
-        />
-
-        <Input
-          label="Email"
-          iconPack={Feather}
-          icon="mail"
-          iconSize={20}
-          errorText={""}
-        />
-
-        <Input
-          label="Password"
-          iconPack={Feather}
-          icon="lock"
-          iconSize={20}
-          errorText={""}
-        />
-
-        <View style={styles.buttonContainer}>
-          <SubmitButton
-            title="Sign up"
-            onPress={() => console.log("submitting...")}
-            // disabled={true}
-          />
-        </View>
+        <TouchableOpacity
+          onPress={() => setSignUp(!isSignUp)}
+          style={styles.linkContainer}
+        >
+          <Text style={styles.link}>{`Switch to ${
+            isSignUp ? "sign in" : "sign up"
+          }`}</Text>
+        </TouchableOpacity>
       </PageContainer>
     </SafeAreaView>
   );
@@ -60,6 +33,16 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginVertical: 20,
+  },
+  linkContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginVertical: 15,
+  },
+  link: {
+    color: colors.blue,
+    fontFamily: "medium",
+    letterSpacing: 0.3,
   },
 });
 
