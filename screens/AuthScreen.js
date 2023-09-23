@@ -1,17 +1,21 @@
-import { StyleSheet, TouchableOpacity, Text } from "react-native";
+import { useState } from "react";
+import { StyleSheet, TouchableOpacity, View, Text, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import PageContainer from "../components/PageContainer";
 import SignUpForm from "../components/SignUpForm";
 import SignInForm from "../components/SignInForm";
-import { useState } from "react";
 import colors from "../contants/colors";
+import logo from "../assets/images/logo.png";
 
 const AuthScreen = () => {
   const [isSignUp, setSignUp] = useState(false);
   return (
     <SafeAreaView style={styles.container}>
       <PageContainer>
+        <View style={styles.imageContainer}>
+          <Image source={logo} style={styles.image} />
+        </View>
         {isSignUp ? <SignUpForm /> : <SignInForm />}
 
         <TouchableOpacity
@@ -30,6 +34,14 @@ const AuthScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  imageContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    width: "40%",
+    resizeMode: "contain",
   },
   buttonContainer: {
     marginVertical: 20,
