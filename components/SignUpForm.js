@@ -2,29 +2,11 @@ import { FontAwesome, Feather } from "@expo/vector-icons";
 
 import Input from "./Input";
 import SubmitButton from "./SubmitButton";
-import { validate } from "validate.js";
+
+import inputHandleChange from "../utilis/actions/formActions";
 
 const SignUpForm = () => {
-  const inputHandleChange = (inputID, inputValue) => {
-    if (inputID === "firstName" || inputID === "lastName") {
-      const constraints = {
-        presence: { allowEmpty: false },
-        format: {
-          pattern: "[a-z]+",
-          flags: "i",
-          message: "value can only contains letters",
-        },
-      };
-      const result = validate(
-        { [inputID]: inputValue },
-        { [inputID]: constraints }
-      );
-
-      console.log(result);
-    } else if (inputID === "email") {
-    } else if (inputID === "password") {
-    }
-  };
+  inputHandleChange;
 
   return (
     <>
@@ -55,7 +37,9 @@ const SignUpForm = () => {
         icon="mail"
         iconSize={20}
         errorText={""}
+        keyboardType="email-address"
         onInputChange={inputHandleChange}
+        autoCapitalize="none"
       />
 
       <Input
@@ -65,7 +49,9 @@ const SignUpForm = () => {
         icon="lock"
         iconSize={20}
         errorText={""}
+        secureTextEntry={true}
         onInputChange={inputHandleChange}
+        autoCapitalize="none"
       />
 
       <SubmitButton

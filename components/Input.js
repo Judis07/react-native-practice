@@ -9,6 +9,8 @@ const Input = ({
   iconSize,
   errorText,
   onInputChange,
+  secureTextEntry,
+  keyboardType,
 }) => {
   const onChangeText = (text) => {
     onInputChange && onInputChange(id, text);
@@ -21,7 +23,12 @@ const Input = ({
           <IconPack name={icon} size={iconSize || 20} style={styles.icon} />
         )}
 
-        <TextInput style={styles.input} onChangeText={onChangeText} />
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeText}
+          secureTextEntry={secureTextEntry}
+          keyboardType={keyboardType}
+        />
       </View>
 
       {errorText && (
