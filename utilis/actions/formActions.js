@@ -1,8 +1,13 @@
-import { validateEmail, validatePassword } from "../validationConstraints";
+import {
+  validateEmail,
+  validatePassword,
+  validateString,
+} from "../validationConstraints";
 
 const inputHandleChange = (inputID, inputValue) => {
   if (inputID === "firstName" || inputID === "lastName") {
     const errorArr = validateString(inputID, inputValue);
+    console.log(errorArr);
   } else if (inputID === "email") {
     const errorArr = validateEmail(inputID, inputValue);
 
