@@ -1,5 +1,14 @@
 import { useState } from "react";
-import { StyleSheet, TouchableOpacity, View, Text, Image } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Text,
+  Image,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import PageContainer from "../components/PageContainer";
@@ -13,19 +22,27 @@ const AuthScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <PageContainer>
-        <View style={styles.imageContainer}>
-          <Image source={logo} style={styles.image} />
-        </View>
-        {isSignUp ? <SignUpForm /> : <SignInForm />}
+        <ScrollView>
+          <KeyboardAvoidingView
+            style={styles.keyboardAvoidingView}
+            behavior={Platform.OS === "ios" ? "height" : ""}
+            keyboardVerticalOffset={100}
+          >
+            <View style={styles.imageContainer}>
+              <Image source={logo} style={styles.image} />
+            </View>
+            {isSignUp ? <SignUpForm /> : <SignInForm />}
 
-        <TouchableOpacity
-          onPress={() => setSignUp(!isSignUp)}
-          style={styles.linkContainer}
-        >
-          <Text style={styles.link}>{`Switch to ${
-            isSignUp ? "sign in" : "sign up"
-          }`}</Text>
-        </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setSignUp(!isSignUp)}
+              style={styles.linkContainer}
+            >
+              <Text style={styles.link}>{`Switch to ${
+                isSignUp ? "sign in" : "sign up"
+              }`}</Text>
+            </TouchableOpacity>
+          </KeyboardAvoidingView>
+        </ScrollView>
       </PageContainer>
     </SafeAreaView>
   );
@@ -55,6 +72,11 @@ const styles = StyleSheet.create({
     color: colors.blue,
     fontFamily: "medium",
     letterSpacing: 0.3,
+  },
+
+  keyboardAvoidingView: {
+    flex: 1,
+    justifyContent: "center",
   },
 });
 
