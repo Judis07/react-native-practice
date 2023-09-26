@@ -1,12 +1,33 @@
+import { useCallback, useReducer } from "react";
+
 import { FontAwesome, Feather } from "@expo/vector-icons";
 
 import Input from "./Input";
 import SubmitButton from "./SubmitButton";
 
-import inputHandleChange from "../utilis/actions/formActions";
+import validateInput from "../utilis/actions/formActions";
+import { reducer } from "../utilis/reducers/formReducer";
+
+const initialState = {
+  inputValidites: {
+    firstName: false,
+    lastName: false,
+    email: false,
+    password: false,
+  },
+  formIsValid: false,
+};
 
 const SignUpForm = () => {
-  inputHandleChange;
+  const [formState, dispatchFormState] = useReducer(reducer, initialState);
+
+  const inputHandleChange = useCallback(
+    (inputID, inputValue) => {
+      const result = validateInput(inputID, inputValue);
+      dispatchFormState({ validationResult: result, inputID });
+    },
+    [dispatchFormState]
+  );
 
   return (
     <>
@@ -16,7 +37,7 @@ const SignUpForm = () => {
         iconPack={FontAwesome}
         icon="user-o"
         iconSize={20}
-        errorText={""}
+        errorText={formState.inputValidites["firstName"]}
         onInputChange={inputHandleChange}
       />
 
@@ -26,7 +47,7 @@ const SignUpForm = () => {
         iconPack={FontAwesome}
         icon="user-o"
         iconSize={20}
-        errorText={""}
+        errorText={formState.inputValidites["lastName"]}
         onInputChange={inputHandleChange}
       />
 
@@ -36,7 +57,7 @@ const SignUpForm = () => {
         iconPack={Feather}
         icon="mail"
         iconSize={20}
-        errorText={""}
+        errorText={formState.inputValidites["email"]}
         keyboardType="email-address"
         onInputChange={inputHandleChange}
         autoCapitalize="none"
@@ -48,7 +69,7 @@ const SignUpForm = () => {
         iconPack={Feather}
         icon="lock"
         iconSize={20}
-        errorText={""}
+        errorText={formState.inputValidites["password"]}
         secureTextEntry={true}
         onInputChange={inputHandleChange}
         autoCapitalize="none"
@@ -58,7 +79,7 @@ const SignUpForm = () => {
         title="Sign up"
         onPress={() => console.log("submitting...")}
         customStyles={{ marginTop: 20 }}
-        // disabled={true}
+        disabled={!formState.formIsValid}
       />
     </>
   );

@@ -4,18 +4,19 @@ import {
   validateString,
 } from "../validationConstraints";
 
-const inputHandleChange = (inputID, inputValue) => {
+const validateInput = (inputID, inputValue) => {
   if (inputID === "firstName" || inputID === "lastName") {
     const errorArr = validateString(inputID, inputValue);
-    console.log(errorArr);
+
+    return errorArr;
   } else if (inputID === "email") {
     const errorArr = validateEmail(inputID, inputValue);
 
-    console.log(errorArr);
+    return errorArr;
   } else if (inputID === "password") {
     const errorArr = validatePassword(inputID, inputValue);
-    console.log(errorArr);
+    return errorArr;
   }
 };
 
-export default inputHandleChange;
+export default validateInput;

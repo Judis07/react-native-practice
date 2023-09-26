@@ -1,10 +1,31 @@
+import { useCallback, useReducer } from "react";
+
 import { Feather } from "@expo/vector-icons";
 import Input from "./Input";
 import SubmitButton from "./SubmitButton";
 
-import inputHandleChange from "../utilis/actions/formActions";
+import { reducer } from "../utilis/reducers/formReducer";
+import validateInput from "../utilis/actions/formActions";
+
+const initialState = {
+  inputValidites: {
+    email: false,
+    password: false,
+  },
+  formIsValid: false,
+};
 
 const SignInForm = () => {
+  const [formState, dispatchFormState] = useReducer(reducer, initialState);
+
+  const inputHandleChange = useCallback(
+    (inputID, inputValue) => {
+      const result = validateInput(inputID, inputValue);
+      dispatchFormState({ validationResult: result, inputID });
+    },
+    [dispatchFormState]
+  );
+
   return (
     <>
       <Input
@@ -14,7 +35,7 @@ const SignInForm = () => {
         icon="mail"
         iconSize={20}
         keyboardType="email-address"
-        errorText={""}
+        errorText={formState.inputValidites["email"]}
         onInputChange={inputHandleChange}
       />
 
@@ -24,7 +45,7 @@ const SignInForm = () => {
         iconPack={Feather}
         icon="lock"
         iconSize={20}
-        errorText={""}
+        errorText={formState.inputValidites["password"]}
         secureTextEntry={true}
         onInputChange={inputHandleChange}
       />
@@ -33,7 +54,7 @@ const SignInForm = () => {
         title="Sign In"
         onPress={() => console.log("submitting...")}
         customStyles={{ marginTop: 20 }}
-        // disabled={true}
+        disabled={!formState.formIsValid}
       />
     </>
   );
