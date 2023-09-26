@@ -6,8 +6,13 @@ import SubmitButton from "./SubmitButton";
 
 import { reducer } from "../utilis/reducers/formReducer";
 import validateInput from "../utilis/actions/formActions";
+import { signIn } from "../utilis/actions/authActions";
 
 const initialState = {
+  inputValues: {
+    email: "",
+    password: "",
+  },
   inputValidites: {
     email: false,
     password: false,
@@ -21,10 +26,16 @@ const SignInForm = () => {
   const inputHandleChange = useCallback(
     (inputID, inputValue) => {
       const result = validateInput(inputID, inputValue);
-      dispatchFormState({ validationResult: result, inputID });
+      dispatchFormState({ validationResult: result, inputID, inputValue });
     },
     [dispatchFormState]
   );
+
+  const authHandler = () => {
+    const { email, password } = formState.inputValues;
+
+    signIn(email, password);
+  };
 
   return (
     <>
@@ -52,7 +63,7 @@ const SignInForm = () => {
 
       <SubmitButton
         title="Sign In"
-        onPress={() => console.log("submitting...")}
+        onPress={authHandler}
         customStyles={{ marginTop: 20 }}
         disabled={!formState.formIsValid}
       />

@@ -7,8 +7,15 @@ import SubmitButton from "./SubmitButton";
 
 import validateInput from "../utilis/actions/formActions";
 import { reducer } from "../utilis/reducers/formReducer";
+import { signUp } from "../utilis/actions/authActions";
 
 const initialState = {
+  inputValues: {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  },
   inputValidites: {
     firstName: false,
     lastName: false,
@@ -24,10 +31,15 @@ const SignUpForm = () => {
   const inputHandleChange = useCallback(
     (inputID, inputValue) => {
       const result = validateInput(inputID, inputValue);
-      dispatchFormState({ validationResult: result, inputID });
+      dispatchFormState({ validationResult: result, inputID, inputValue });
     },
     [dispatchFormState]
   );
+
+  const authHandler = () => {
+    const { firstName, lastName, email, password } = formState.inputValues;
+    signUp(firstName, lastName, email, password);
+  };
 
   return (
     <>
@@ -77,7 +89,7 @@ const SignUpForm = () => {
 
       <SubmitButton
         title="Sign up"
-        onPress={() => console.log("submitting...")}
+        onPress={authHandler}
         customStyles={{ marginTop: 20 }}
         disabled={!formState.formIsValid}
       />
